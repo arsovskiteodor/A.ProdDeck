@@ -1,0 +1,99 @@
+(footprint "Alps_RS60N111100B"
+	(version 20221018)
+	(generator "pcbnew")
+	(layer "F.Cu")
+	(descr "Alps RS60N111100B 60mm slide potentiometer, single unit. Built from ALPS doc S602RN101 (Feb 1994) mechanical drawing. Pin1/Pin3 = resistive track ends, Pin2 = wiper. Row-offset assignment (1.88mm vs 5.63mm) to Pin1/3 vs Pin2 inferred from typical slide-pot construction, not explicitly labelled on the drawing -- verify against physical part before final assembly.")
+	(tags "slider potentiometer alps RS60N111100B")
+	(attr through_hole)
+	(fp_text reference "REF**"
+		(at 0 -10.5 0)
+		(layer "F.SilkS")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000001")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text value "Alps_RS60N111100B"
+		(at 0 10.5 0)
+		(layer "F.Fab")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000002")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_rect
+		(start -44 -8)
+		(end 44 8)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000003")
+	)
+	(fp_rect
+		(start -44.5 -8.5)
+		(end 44.5 8.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000004")
+	)
+	(fp_text user "Pin1/Pin3=ends, Pin2=wiper -- verify row assignment vs physical part"
+		(at 0 -6.5 0)
+		(layer "Cmts.User")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000005")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -43.75 0)
+		(size 2.0 2.0)
+		(drill 2.0)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000010")
+	)
+	(pad "" np_thru_hole circle
+		(at 43.75 0)
+		(size 2.0 2.0)
+		(drill 2.0)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000011")
+	)
+	(pad "1" thru_hole circle
+		(at -43.75 1.88)
+		(size 2.5 2.5)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000020")
+	)
+	(pad "2" thru_hole circle
+		(at -43.75 5.63)
+		(size 2.5 2.5)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000021")
+	)
+	(pad "3" thru_hole circle
+		(at 7.95 1.88)
+		(size 2.5 2.5)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1a1a1a1-0001-4001-8001-000000000022")
+	)
+	(embedded_fonts no)
+)

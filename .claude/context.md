@@ -35,8 +35,8 @@ ProdDeck/
 - **Firmware decided: ZMK** (devicetree YAML config, BLE HID + encoder + SAADC native)
 - **MCU decided: bare STM32WB55** (STM32WB55CEU6 512KB or STM32WB55CGU6 1MB, pin-compatible — flash size is a late BOM decision). 48-pin UFQFPN, dual-core (Cortex-M4 app + Cortex-M0+ BLE wireless coprocessor). PCB assembly outsourced to manufacturer (JLCPCB/PCBWay) — hand-solderability no longer a constraint. Supersedes the E73-2G4M08S1C module.
 - **New components:** MCP73831 charging IC, LiPo battery (400–600mAh), JST-PH connector, diode-OR power path (unchanged). **Now also needed on-PCB** (previously internal to the E73 module): HSE + LSE crystals, RF matching network + antenna, SWD programming header (BOOT0 + SWD, not just USB) — see Phil's Lab reference design and ST app notes AN5165/AN2867
-- **Slider decided: Alps RS60N111100B** (60mm travel, 88mm overall, 80mm hole spacing)
-- No schematic symbols or footprints placed yet
+- **Slider decided: Bourns PTA6043-2015DPB103** (2026-08-02, superseded the Alps RS60N111100B — cheaper/more available; see decisions.md). Placed in schematic as **R12** (imported symbol's default ref prefix, cosmetic quirk), fully wired.
+- Schematic has substantial progress — see `KiCAD/ProdDeck/ProdDeck.kicad_sch` directly for current state (component/net count changes frequently; this doc lags behind, always verify live rather than trusting this section)
 - No firmware started
 - No app started
 - No enclosure started
@@ -65,7 +65,8 @@ All registered in `KiCAD/ProdDeck/fp-lib-table` — KiCAD loads automatically.
 - `Gateron_KS33_Solderable` → `libs/MX_V2/Gateron_KS33_Solderable.pretty` ✓
 - `Gateron_KS33_Hotswap` → `libs/MX_V2/Gateron_KS33_Hotswap.pretty` ✓ (available, not used)
 - `PEC11R_Encoder` → `libs/rotary-encoder-PEC11R` ✓
-- `ProdDeck_Custom` → `libs/ProdDeck_Custom.pretty` (Alps slider footprint needed; STM32WB55 footprint/symbol also needed here now — none sourced yet)
+- `ProdDeck_Custom` → `libs/ProdDeck_Custom.pretty` (has a hand-built Alps RS60N111100B slider footprint — now unused, superseded by the Bourns swap below, kept for reference only)
+- `slider` → `libs/Bourns_PTA6043/` (symbol + `footprints.pretty` + 3D model) — Bourns PTA6043-2015DPB103, the current slider part. Own `sym-lib-table` entry too (not just fp-lib-table).
 
 **Removed:** `nrfmicro` library (E73-2G4M08S1C footprint) — no longer needed after the MCU switch to bare STM32WB55. Deleted from `libs/` and unregistered from `fp-lib-table`.
 

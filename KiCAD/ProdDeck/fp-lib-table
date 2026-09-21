@@ -1,0 +1,9 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "Gateron_KS33_Solderable") (type "KiCad") (uri "${KIPRJMOD}/libs/MX_V2/Gateron_KS33_Solderable.pretty") (options "") (descr "Gateron KS-33 LP 2.0 direct-solder footprints — use Gateron-KS33-Solderable-1U for this project"))
+	(lib (name "Gateron_KS33_Hotswap") (type "KiCad") (uri "${KIPRJMOD}/libs/MX_V2/Gateron_KS33_Hotswap.pretty") (options "") (descr "Gateron KS-33 LP 2.0 hotswap socket footprints — use Gateron-KS33-Hotswap-1U if hotswap sockets are used"))
+	(lib (name "PEC11R_Encoder") (type "KiCad") (uri "${KIPRJMOD}/libs/rotary-encoder-PEC11R") (options "") (descr "Bourns PEC11R-4220F-S0024 rotary encoder — 24 detent variant, confirm part number matches order"))
+	(lib (name "ProdDeck_Custom") (type "KiCad") (uri "${KIPRJMOD}/libs/ProdDeck_Custom.pretty") (options "") (descr "Project custom footprints — Alps RS60N111100B slider and any other hand-built parts"))
+	(lib (name "ProdDeck_PCBlib") (type "KiCad") (uri "${KIPRJMOD}/ProdDeck_PCBlib.pretty") (options "") (descr ""))
+	(lib (name "slider") (type "KiCad") (uri "${KIPRJMOD}/libs/Bourns_PTA6043/footprints.pretty") (options "") (descr ""))
+)
