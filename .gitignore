@@ -1,0 +1,10 @@
+# Claude Code session files
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+
+# KiCad lock files, backups and local history
+*.lck
+*-backups/
+.history/
+fp-info-cache
