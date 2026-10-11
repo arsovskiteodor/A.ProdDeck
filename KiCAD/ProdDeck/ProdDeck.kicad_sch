@@ -12621,7 +12621,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "15cd8807-6688-40fa-97d2-95935313189d")
 		(property "Reference" "SW6"
 			(at 212.09 153.75 0)
@@ -12753,7 +12753,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "19c4a26a-9d82-4441-bb6c-e4655501cdaf")
 		(property "Reference" "BATT_CONN1"
 			(at 39.37 157.734 0)
@@ -13754,7 +13754,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "26bca9a8-f9f6-40f9-a06c-5f324ade7649")
 		(property "Reference" "R12"
 			(at 268.478 153.924 90)
@@ -14731,7 +14731,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "33a9f6b3-85ff-476c-b567-ee0b2b904dd2")
 		(property "Reference" "SW5"
 			(at 212.09 139.78 0)
@@ -17719,7 +17719,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "668f1616-8247-4b3d-aa50-0155d0de5a68")
 		(property "Reference" "ENC1"
 			(at 180.086 27.94 0)
@@ -21891,7 +21891,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "d00dedeb-2f72-4e90-96a1-3374f7ef2872")
 		(property "Reference" "SW3"
 			(at 189.23 139.78 0)
@@ -22386,7 +22386,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "dd721f74-42df-4a53-a548-13ddefd44adf")
 		(property "Reference" "SW4"
 			(at 189.23 153.75 0)
@@ -22518,7 +22518,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "ddae1c2f-debf-42b4-9efa-3b507a29baac")
 		(property "Reference" "SW7"
 			(at 236.22 139.78 0)
@@ -22875,7 +22875,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "ec66d70c-0ede-409b-85d1-f8deab841fad")
 		(property "Reference" "PWR1"
 			(at 78.74 180.42 0)
@@ -23781,7 +23781,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "f8603610-8d9e-42a5-9301-21d0304915cd")
 		(property "Reference" "SW8"
 			(at 236.22 153.75 0)
@@ -24048,7 +24048,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "f96c65ea-d201-40ff-a407-3d2d36f9f437")
 		(property "Reference" "ENC3"
 			(at 261.62 27.686 0)
@@ -24189,7 +24189,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "fab6c9d0-3390-401c-b5dd-182b548dd45a")
 		(property "Reference" "ENC2"
 			(at 220.98 27.432 0)
