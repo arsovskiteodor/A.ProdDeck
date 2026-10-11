@@ -4,6 +4,19 @@ Append entries newest-first. Format: `## [DATE] — Title`, then a one-liner on 
 
 ---
 
+## 2026-08-02 — Slider changed: Alps RS60N111100B → Bourns PTA6043-2015DPB103
+
+Switched slide potentiometer from the Alps industrial part to the Bourns PTA6043-2015DPB103 — cheaper and far more available (Digikey/Mouser stocked) than the Alps part, which required pulling a 1994 mechanical drawing and hand-building a custom footprint from scratch.
+
+- **Symbol + footprint + 3D model** added directly under `KiCAD/ProdDeck/libs/Bourns_PTA6043/` (own `sym-lib-table`/`fp-lib-table` entries, both named `slider`). The imported symbol is a multi-unit part (2 units, both exposing pins 1/2/3) — likely an artifact of however it was sourced/converted; only unit 1 is used and KiCad resolves to it by default without issue.
+- **3D model linked** — the footprint (`slider:POT_PTA6043`) didn't have its `.stp` model attached when added; added the `(model ...)` block pointing at `${KIPRJMOD}/libs/Bourns_PTA6043/3dmodel/PTA6043-2015DPB103.stp`.
+- **Placed as R12**, not SL1 — the imported symbol's default reference-designator prefix is "R" (never customized by whoever generated it), so KiCad auto-numbered it into the resistor sequence. Cosmetic only, not worth fixing by hand.
+- **Rewired directly to the new part** (done by the user, not scripted): pin 1 → `+3.3V`, pin 2 (wiper) → `SLIDER_WIPER`, pin 3 → `GND` — same net assignments as the original Alps placement, verified via netlist trace.
+- **The hand-built Alps footprint (`libs/ProdDeck_Custom.pretty/Alps_RS60N111100B.kicad_mod`) is now unused** but left in place for reference — not deleted, in case of a future part reversal. No longer referenced by anything in the schematic.
+- **Panel cutout dimensions from the old Alps datasheet no longer apply** — if enclosure/panel design work happens later, the PTA6043's mechanical drawing needs to be pulled fresh (travel length, actuator overhang, mounting hole pattern likely all differ from the Alps part).
+
+---
+
 ## 2026-07-28 — Slider: Alps RS60N111100B (60mm travel)
 
 Overall length 88mm, body 16×8mm, mounting hole spacing 80mm. 45mm ruled out (too short), 100mm ruled out (enclosure too long). Pull exact mechanical drawing from tech.alpsalpine.com before cutting panel slot.
