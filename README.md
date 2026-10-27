@@ -4,12 +4,20 @@ Custom PCB productivity deck — StreamDeck-style device with key switches, rota
 
 A joint project with product design student **Aleksandra Elin** ([LinkedIn](https://www.linkedin.com/in/aleksandra-elin-6274052a9/)).
 
+![ProdDeck PCB 3D render](ProdDeck-3D.png)
+
 **Hardware:**
 - 6x key switches — Gateron KS-33 (Low Profile 2.0)
 - 3x rotary encoders with push button — Bourns PEC11R-4220F-S0024
 - 1x slider (fader) — Bourns PTA6043-2015DPB103
 - MCU — STM32WB55CGU6 (BLE + native USB)
 - USB-C (wired HID + charging) and LiPo battery (wireless BLE HID)
+
+## PCB
+
+| 3D view (top) | Layout |
+|---|---|
+| ![ProdDeck PCB top view](KiCAD/ProdDeck/ProdDeck.png) | ![ProdDeck PCB layout](PCB-Layout.png) |
 
 ## Repository Layout
 
