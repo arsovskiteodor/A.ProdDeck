@@ -16,7 +16,7 @@ Still open before cutouts can be finalized:
 - Encoder shaft length (footprint is identical across shaft lengths, so this doesn't affect the PCB)
 - PCB-to-panel standoff height
 
-See `Docs/streamdeck_component_specs.md` section 6 for the stack-up note.
+See `docs/streamdeck_component_specs.md` section 6 for the stack-up note.
 
 ## CAD Tool
 

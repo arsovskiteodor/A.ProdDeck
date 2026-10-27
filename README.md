@@ -4,7 +4,7 @@ Custom PCB productivity deck — StreamDeck-style device with key switches, rota
 
 A joint project with product design student **Aleksandra Elin** ([LinkedIn](https://www.linkedin.com/in/aleksandra-elin-6274052a9/)).
 
-![ProdDeck PCB 3D render](ProdDeck-3D.png)
+![ProdDeck PCB 3D render](docs/ProdDeck-3D.png)
 
 **Hardware:**
 - 6x key switches — Gateron KS-33 (Low Profile 2.0)
@@ -17,7 +17,7 @@ A joint project with product design student **Aleksandra Elin** ([LinkedIn](http
 
 | 3D view (top) | Layout |
 |---|---|
-| ![ProdDeck PCB top view](KiCAD/ProdDeck/ProdDeck.png) | ![ProdDeck PCB layout](PCB-Layout.png) |
+| ![ProdDeck PCB top view](docs/ProdDeck.png) | ![ProdDeck PCB layout](docs/PCB-Layout.png) |
 
 ## Repository Layout
 
@@ -27,7 +27,7 @@ A joint project with product design student **Aleksandra Elin** ([LinkedIn](http
 | `firmware/` | MCU firmware (ZMK) |
 | `app/` | Desktop configurator — maps keys/dials/slider to shortcuts and app profiles |
 | `enclosure/` | 3D mechanical files for chassis/panel |
-| `Docs/` | Component specs, schematic plan, datasheet notes |
+| `docs/` | Component specs, schematic plan, datasheet notes |
 
 ## Status
 

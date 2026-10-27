@@ -40,7 +40,7 @@ No off-the-shelf ZMK board definition exists for this exact custom PCB — board
 | Battery sense (ADC, ½ battery voltage) | PA0 |
 | USB D- / D+ | PA11 / PA12 |
 
-No external pull-ups on keys or encoders. Full details: `Docs/schematic_plan.md`.
+No external pull-ups on keys or encoders. Full details: `docs/schematic_plan.md`.
 
 ## Mode Switching
 
