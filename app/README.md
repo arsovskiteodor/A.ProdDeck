@@ -16,7 +16,7 @@ Desktop app for configuring the ProdDeck. Lets users assign shortcuts, macros, a
 - Tauri (Rust backend + web frontend) — small binary, native feel
 - Electron (Node.js backend + web frontend) — larger but faster to prototype
 
-Decision will be logged in `.claude/decisions.md` once made.
+Decision will be recorded here once made.
 
 ## Development
 

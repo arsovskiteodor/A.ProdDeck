@@ -2,7 +2,7 @@
 
 *For chassis / enclosure design — prepared for product designer review · v1*
 
-This sheet lists the candidate electrical components under evaluation for the button grid, encoder (dial) row, and slider, along with the physical dimensions relevant to panel cutouts and enclosure design. Part selection is not finalized — where two options are listed, both are still under consideration. See the stack-up note at the end before finalizing cutout depths.
+This sheet lists the selected electrical components for the button grid, encoder (dial) row, and slider, along with the physical dimensions relevant to panel cutouts and enclosure design. All parts are selected and the PCB is laid out; ruled-out options are kept struck through for reference. See the stack-up note at the end before finalizing cutout depths.
 
 **Planned layout:** 6 buttons (modular grid) + 3 rotary encoders (modular row) + 1 slider (fixed position).
 
@@ -72,32 +72,32 @@ Source: official Bourns PEC11R datasheet (bourns.com/docs/Product-Datasheets/PEC
 
 ---
 
-## 3. Slider (1x, fixed position) — Alps RS60N111100B
+## 3. Slider (1x, fixed position) — Bourns PTA6043-2015DPB103
 
-**Selected: Alps RS60N111100B (60mm travel)** — decided 2026-07-28. Custom KiCAD footprint must be built from datasheet before schematic footprint assignment.
+**Selected: Bourns PTA6043-2015DPB103 (60mm travel)** — changed 2026-09-20 to a smaller, cheaper part. Supersedes the Alps RS60N111100B (decided 2026-07-28).
 
 | Spec | Value |
 |---|---|
+| Series | Bourns PTA slide potentiometer |
 | Travel | 60mm |
-| Overall length | 88mm |
-| Body | 16mm (W) × 8mm (H) |
-| Mounting hole spacing | 80mm |
-| Mounting | 2× M3 screw holes + locating pins |
+| Resistance | 10kΩ (`B103`), linear taper |
+| PCB footprint | `slider:POT_PTA6043` — 7 pads, 8.4mm × 73.4mm, long axis along PCB Y |
+| Mounting | Through-hole PCB pins + mounting tabs (no panel screws) |
 
-Other travel lengths considered and ruled out: 45mm (too short for comfortable use), 100mm (enclosure too long).
+Footprint, symbol and 3D model: `KiCAD/ProdDeck/libs/Bourns_PTA6043/`.
 
 **Panel cutout (slider slot):**
 
 | Dimension | Value | Confidence | Notes |
 |---|---|---|---|
 | Slot shape | Rectangular | — | |
-| Slot length | ~68mm | Approximate | 60mm travel + ~4mm actuator overhang each end. **Verify actuator overhang from datasheet.** |
-| Slot width | ~5mm | Approximate | Actuator lever width + clearance. **Verify from datasheet.** |
+| Slot length | TBD | — | 60mm travel + actuator lever width. **Take from the Bourns PTA datasheet.** |
+| Slot width | TBD | — | Actuator lever width + clearance. **Take from the Bourns PTA datasheet.** |
 | Corner radius | ~1mm | Approximate | Smooth corners reduce stress concentration |
 
-The slot length is **not** just the 60mm travel. The actuator lever occupies physical space at both ends of its range, so the opening must extend beyond the travel limits. Pull the mechanical drawing from tech.alpsalpine.com and measure the actuator lever dimensions before cutting.
+The slot length is **not** just the 60mm travel. The actuator lever occupies physical space at both ends of its range, so the opening must extend beyond the travel limits.
 
-> **Before cutting the panel slot:** pull the exact mechanical drawing for RS60N111100B directly from tech.alpsalpine.com and verify all cutout dimensions. The custom KiCAD footprint must also be built from this drawing.
+> **Before cutting the panel slot:** pull the PTA series mechanical drawing from bourns.com and verify the lever width and slot dimensions. The 3D model in `libs/Bourns_PTA6043/3dmodel/` can also be measured in the enclosure CAD.
 
 ---
 
@@ -106,11 +106,11 @@ The slot length is **not** just the 60mm travel. The actuator lever occupies phy
 | Component | Availability | Source |
 |---|---|---|
 | Kailh Choc V2 (PG1353) | Ready-made, solderable + hotswap variants | github.com/ai03-2725/MX_V2 <br> github.com/perigoso/keyswitch-kicad-library |
-| Gateron KS-33 (LP 2.0) | Ready-made, hotswap footprint | github.com/ai03-2725/MX_V2 |
-| Bourns PEC11R encoder | Ready-made, footprint + symbol + 3D model | github.com/ubiqueIoT/rotary-encoder-PEC11R <br> SnapMagic/SnapEDA (snapeda.com) |
-| Alps RS-series slider | No dedicated library — custom footprint needed | SnapEDA has isolated part coverage only; build from tech.alpsalpine.com mechanical drawing |
+| Gateron KS-33 (LP 2.0) | Ready-made, solderable + hotswap footprints + 3D model — **used** | github.com/ai03-2725/MX_V2 (vendored in `libs/MX_V2/`) |
+| Bourns PEC11R encoder | Ready-made, footprint + symbol + 3D model — **used** | github.com/ubiqueIoT/rotary-encoder-PEC11R (vendored in `libs/rotary-encoder-PEC11R/`) <br> SnapMagic/SnapEDA (snapeda.com) |
+| Bourns PTA6043 slider | Ready-made, footprint + symbol + 3D model — **used** | `libs/Bourns_PTA6043/` |
 
-> **Switch decided (2026-07-28):** Gateron KS-33, 19x19mm grid, 3-pin. Button grid layout can now proceed once the library is added to KiCAD. The slider footprint will still need to be hand-built once travel length is finalized; budget real time for this, it will not be a quick library import like the switches and encoder.
+> All footprints are in place and the PCB is laid out. The old hand-built Alps footprint (`libs/ProdDeck_Custom.pretty/Alps_RS60N111100B.kicad_mod`) is unused and does not fit the Bourns part.
 
 ---
 
@@ -120,9 +120,9 @@ The slot length is **not** just the 60mm travel. The actuator lever occupies phy
 |---|---|---|---|---|
 | Key switch (Gateron KS-33) | Rectangle | 14.0 × 14.0mm, r0.5mm corners | 6 | High — MX standard |
 | Rotary encoder (PEC11R) | Circle | Ø7.0mm | 3 | High — from datasheet |
-| Slider (Alps RS60N111100B) | Rectangle (slot) | ~68mm × ~5mm | 1 | Approximate — verify from Alps datasheet |
+| Slider (Bourns PTA6043) | Rectangle (slot) | TBD | 1 | Take from Bourns PTA datasheet |
 
-> Slot length and width for the slider must be confirmed from tech.alpsalpine.com before finalizing the enclosure design.
+> Slot length and width for the slider must be taken from the Bourns PTA datasheet before finalizing the enclosure design.
 
 ---
 
@@ -132,4 +132,4 @@ None of the dimensions above translate directly into a panel cutout on their own
 
 ---
 
-*Open decisions still pending: encoder shaft length and PCB-to-panel standoff height. Switch family (Gateron KS-33), slider (Alps RS60N111100B, 60mm), and encoder model (Bourns PEC11R-4220F-S0024, 24 detent) all resolved.*
+*Open decisions still pending: encoder shaft length and PCB-to-panel standoff height. Switch family (Gateron KS-33), slider (Bourns PTA6043-2015DPB103, 60mm), and encoder model (Bourns PEC11R-4220F-S0024, 24 detent) all resolved.*

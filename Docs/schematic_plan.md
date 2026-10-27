@@ -1,229 +1,177 @@
-# ProdDeck — Schematic Plan
+# ProdDeck — Schematic Reference
 
-Reference document for placing and wiring components in KiCAD. Work through each section in order.
+Describes the schematic as built (`KiCAD/ProdDeck/ProdDeck.kicad_sch`). The schematic is the source of truth — if this document and the schematic disagree, the schematic wins. Full BOM with MPNs: `KiCAD/ProdDeck/fab/BOM_purchasing.csv`.
 
 ---
 
-## Component List (full BOM draft)
+## Component List
+
+**DNP** = Do Not Populate: not placed by the assembler, hand-soldered after delivery.
 
 | Ref | Part | Value / Part No. | Notes |
 |---|---|---|---|
-| U1 | nRF52840 module | E73-2G4M08S1C | Castellated module — nRF52840 + antenna + crystals + RF passives + DC-DC inductor all internal. Hand-solder to PCB. |
-| U2 | LDO 3.3V | AP2112K-3.3TRG1 | SOT-23-5, 600mA, low dropout |
-| U3 | LiPo charging IC | MCP73831T-2ACI/OT | SOT-23-5, 4.2V single-cell, 500mA max |
-| ~~Y1~~ | ~~32MHz crystal~~ | — | **Removed — internal to E73 module** |
-| ~~Y2~~ | ~~32.768kHz crystal~~ | — | **Removed — internal to E73 module** |
-| ~~ANT1~~ | ~~2.4GHz antenna~~ | — | **Removed — internal to E73 module** |
-| J1 | USB-C connector | USB4105-GF-A or GCT USB4135 | Charging + wired HID + DFU programming |
-| J2 | Battery connector | JST-PH 2-pin | LiPo cell connection |
-| J3 | SWD debug header | 1×4 2.54mm pin header | SWDCLK, SWDIO, GND, 3V3 |
-| SW1–SW6 | Key switch | Gateron KS-33 (LP 2.0) | Solderable. Footprint: `Gateron_KS33_Solderable:Gateron-KS33-Solderable-1U` |
-| ENC1–ENC3 | Rotary encoder | Bourns PEC11R-4220F-**S0024** | 24 detent, push button. Footprint: `PEC11R_Encoder:Bourns-PEC11R-4220F-S0024-0-0-0` |
-| SL1 | Fader slider | Alps RS60N111100B | 60mm travel, custom footprint |
-| SW7 | DFU button | 3×6mm SMD tactile | Enter ZMK USB DFU bootloader |
-| SW8 | RESET button | 3×6mm SMD tactile | Pulls nRF52840 RESET pin low |
-| LED1 | Charge status LED | Red, 0402 | Driven by MCP73831 STAT pin |
-| BAT1 | LiPo cell | 400–600mAh, 3.7V nominal | Size TBD based on enclosure depth |
-| ~~L1~~ | ~~DC-DC inductor~~ | — | **Removed — internal to E73 module** |
-| F1 | Polyfuse | 500mA resettable | USB VBUS protection |
-| D1, D2 | Schottky diodes | BAT54 or similar | Power path OR — USB 5V and LiPo to LDO input |
-| C1, C2 | LDO input decoupling | 100nF + 10µF | On U2 VIN |
-| C3, C4 | LDO output decoupling | 100nF + 10µF | On U2 VOUT |
-| C5–C10 | Module VDD decoupling | 100nF × 6 | On E73 module VDD/VDDIO pins — check E73 datasheet for exact count |
-| ~~C11, C12~~ | ~~nRF52840 DCDC caps~~ | — | **Removed — DCDC internal to E73 module** |
-| ~~C13, C14~~ | ~~Crystal load caps~~ | — | **Removed — crystals internal to E73 module** |
-| C15 | USB bulk cap | 10µF | On 5V rail after polyfuse |
-| C16 | Charge IC decoupling | 4.7µF | On MCP73831 VDD |
-| R1, R2 | USB-C CC resistors | 5.1kΩ | CC1 and CC2 to GND (device mode) |
-| R3–R8 | Switch pull-ups | 10kΩ × 6 | SW1–SW6 (or use nRF52840 internal pull-ups) |
-| R9–R17 | Encoder pull-ups | 10kΩ × 9 | A, B, SW pins × 3 encoders |
-| R18 | Charge LED resistor | 1kΩ | In series with LED1 |
-| R19 | Battery sense divider high | 100kΩ | BATT+ to P0.29 |
-| R20 | Battery sense divider low | 100kΩ | P0.29 to GND |
-| R21 | MCP73831 PROG resistor | 2kΩ | Sets charge current: 500mA |
+| U4 | MCU | STM32WB55CGU6 | QFN-48, 1MB flash, BLE + USB FS |
+| U1 | LDO 3.3V | MIC5365-3.3YD5 | TSOT-23-5, 150mA |
+| U3 | LiPo charger | MCP73831T-2ACI/OT | SOT-23-5, 4.2V single cell |
+| U2 | USB ESD protection | USBLC6-2SC6 | On D+/D- |
+| USB1 | USB-C receptacle | GCT USB4105-GF-A | USB 2.0, power + wired HID |
+| BATT_CONN1 | Battery connector | JST-PH S2B-PH-K (horizontal) | DNP |
+| PWR1 | Power slide switch | C&K OS102011MS2QN1 | DNP — disconnects battery from the system |
+| SWD1 | SWD/debug pads | Tag-Connect TC2030-IDC footprint | Pads only, no part placed |
+| SW3–SW8 | Key switches KEY1–KEY6 | Gateron KS-33 (LP 2.0) | DNP |
+| ENC1–ENC3 | Rotary encoders | Bourns PEC11R-4220F-S0024 | DNP — 24 detent, push switch |
+| R12 | Slider pot | Bourns PTA6043-2015DPB103 | DNP — 60mm travel, 10kΩ linear |
+| BOOT0 | Bootloader button | C&K RS-282G05A3 | Tactile |
+| NRST1 | Reset button | C&K RS-282G05A3 | Tactile |
+| X1 | LSE crystal | 32.768kHz, NDK STDMUB1 | Load caps C16/C17 10pF |
+| X2 | HSE crystal | 32MHz, NDK NX2016SA | No external load caps (WB55 internal trim) |
+| L1, L2 | SMPS inductors | 10nH + 10µH | WB55 internal SMPS |
+| L3, C20, C21 | RF matching | 2.7nH, 0.8pF, 0.3pF | Between RF1 pin and filter |
+| FLT1 | RF low-pass filter | TDK DLF162500LT-5028A1 | Custom footprint in `ProdDeck_PCBlib` |
+| RF1 | Antenna connector | Hirose U.FL-R-SMT | External 2.4GHz antenna |
+| D2, D3 | Schottky diodes | PMEG2010AEH | Battery / USB power OR |
+| D1 | Power LED | 0402 red | R3 5.1kΩ |
+| D4 | Charge LED | 0402 red | R7 1kΩ |
+| R1, R2 | USB-C CC pull-downs | 5.1kΩ | Device (sink) mode |
+| R4 | MCP73831 PROG | 5.1kΩ | Charge current ≈ 196mA |
+| R8, R9 | Battery sense divider | 100kΩ / 100kΩ | Halves battery voltage for ADC |
+| R10, R11 | BOOT0 pull-down / series | 5.1kΩ / 220Ω | |
+| H1, H3–H5 | Mounting holes | M3, plated, to GND | |
 
-> **No external flash needed.** The nRF52840 has 1MB internal flash — ZMK firmware + keymap fits comfortably. The W25Q16 from the original RP2040 plan is removed.
+Decoupling: 4.7µF (C1, C3, C5, C6, C10, C19), 1µF (C2), 100nF (C4, C7–C9, C11–C15, C18, C22).
 
 ---
 
 ## Power Architecture
 
 ```
-USB VBUS (5V)
-    │
-   [F1] 500mA polyfuse
-    │
-    ├──[C15 10µF]── GND
-    │
-    ├──[D1 Schottky]───────────────────┐
-    │                                  │
-    └──[U3 MCP73831]── [J2] LiPo ──[D2 Schottky]──┤
-         (charging)      3.7V                       │
-                                              LDO input (~4.4V USB / ~3.4V batt)
-                                                    │
-                                             [U2] AP2112K LDO
-                                                    │
-                                                  +3V3 rail
-                                                    │
-                                  ┌─────────────────┼──────────────────┐
-                               U1 VDD           peripherals        pull-ups
-                            + decoupling     (encoders, slider,
-                                              switches)
+USB-C VBUS (+5V) ──┬── C2 1µF
+                   ├── U3 MCP73831 ── BATT+ (BATT_CONN1)
+                   ├── D4 + R7 ── U3 STAT          (charge LED)
+                   └── D3 ──┐
+                            ├── U1 MIC5365 LDO ── +3.3V
+BATT+ ── PWR1 switch ── D2 ─┘   (C1 4.7µF in)
+              │
+              └── R8 100k ── BATT_SENSE (PA0) ── R9 100k ── GND
 ```
 
-**Mode behaviour:**
-- USB connected: D1 wins (5V - 0.3V = 4.7V > LiPo 4.2V - 0.3V = 3.9V). LiPo charges via MCP73831. System runs from USB.
-- USB disconnected: LiPo through D2 powers LDO. BLE HID active.
-- Both modes produce stable +3V3 from LDO.
-
-**nRF52840 internal DCDC:**
-Enable the internal DC-DC converter (buck regulator) via L1 (4.7µH inductor on DCC pin). This reduces current draw from the LiPo by ~30%, meaningfully extending battery life.
+- **USB plugged in:** the system runs from USB through D3, and the MCP73831 charges the battery. Battery charging works even with PWR1 off, because the charger sits before the switch.
+- **USB unplugged:** the battery powers the LDO through PWR1 and D2.
+- **Charge current:** R4 = 5.1kΩ → I = 1000 / 5.1 ≈ 196mA. Size the LiPo so this is ≤ 1C.
+- **Battery sense:** the divider is after PWR1, so it draws nothing when the device is switched off. 4.2V full charge reads as 2.1V at PA0.
+- **LEDs:** D1 (power) is on whenever +3.3V is up. D4 (charge) lights while the MCP73831 STAT pin is low (charging).
+- **MCU core supply:** the WB55's internal SMPS is used (L1 + L2 on VLXSMPS / VFBSMPS).
 
 ---
 
-## E73 Module Pin Assignment
+## MCU Pin Assignment (U4 — STM32WB55CGU6)
 
-| Pin | Net | Connected to |
-|---|---|---|
-| P0.02 | SW1 | Key switch 1 |
-| P0.03 | SW2 | Key switch 2 |
-| P0.04 | SW3 | Key switch 3 |
-| P0.05 | SW4 | Key switch 4 |
-| P0.06 | SW5 | Key switch 5 |
-| P0.07 | SW6 | Key switch 6 |
-| P0.08 | ENC1_A | Encoder 1 phase A |
-| P0.09 | ENC1_B | Encoder 1 phase B |
-| P0.10 | ENC1_SW | Encoder 1 push button |
-| P0.11 | ENC2_A | Encoder 2 phase A |
-| P0.12 | ENC2_B | Encoder 2 phase B |
-| P0.13 | ENC2_SW | Encoder 2 push button |
-| P0.14 | ENC3_A | Encoder 3 phase A |
-| P0.15 | ENC3_B | Encoder 3 phase B |
-| P0.16 | ENC3_SW | Encoder 3 push button |
-| P0.28 (AIN4) | SLIDER | Alps slider wiper (SAADC input) |
-| P0.29 (AIN5) | BATT_SENSE | Battery voltage divider midpoint (optional) |
-| P0.17 | CHG_STAT | MCP73831 STAT pin → LED1 |
-| P0.20 | DFU_BTN | DFU button SW7 to GND |
-| P0.00 | XL1 | — internal to E73 module — |
-| P0.01 | XL2 | — internal to E73 module — |
-| P0.18 | RESET_N | Reset button SW8 to GND (dedicated reset pin) |
-| USB_DP | USB_DP | USB-C D+ |
-| USB_DM | USB_DM | USB-C D- |
-| SWDCLK | SWDCLK | SWD debug header J3 |
-| SWDIO | SWDIO | SWD debug header J3 |
-| P1.00–P1.15 | — | Spare GPIO (future: RGB, OLED, BLE profile buttons) |
+| Pin | Port | Net | Connected to |
+|---|---|---|---|
+| 13 | PA4 | KEY1 | SW3 |
+| 14 | PA5 | KEY2 | SW5 |
+| 17 | PA8 | KEY3 | SW7 |
+| 18 | PA9 | KEY4 | SW4 |
+| 36 | PA10 | KEY5 | SW6 |
+| 42 | PA15 | KEY6 | SW8 |
+| 11 | PA2 | ENC1_A | ENC1 phase A |
+| 12 | PA3 | ENC1_B | ENC1 phase B |
+| 19 | PB2 | ENC1_SW | ENC1 push switch |
+| 15 | PA6 | ENC2_A | ENC2 phase A |
+| 16 | PA7 | ENC2_B | ENC2 phase B |
+| 44 | PB4 | ENC2_SW | ENC2 push switch |
+| 28 | PB0 | ENC3_A | ENC3 phase A |
+| 29 | PB1 | ENC3_B | ENC3 phase B |
+| 45 | PB5 | ENC3_SW | ENC3 push switch |
+| 10 | PA1 | SLIDER_WIPER | R12 wiper (ADC) |
+| 9 | PA0 | BATT_SENSE | Battery divider midpoint (ADC) |
+| 37 | PA11 | USB_D- | USB-C via U2 |
+| 38 | PA12 | USB_D+ | USB-C via U2 |
+| 39 | PA13 | SWD_DIO | SWD1 |
+| 41 | PA14 | SWD_CLK | SWD1 |
+| 43 | PB3 | SWD_TRC | SWD1 (SWO trace) |
+| 7 | NRST | SWD_NRST | NRST1 button, SWD1, C18 |
+| 4 | PH3-BOOT0 | BOOT0 | BOOT0 button, R10 pull-down |
+| 2, 3 | PC14, PC15 | LSE_IN / LSE_OUT | X1 |
+| 25, 24 | OSC_IN / OSC_OUT | HSE_IN / HSE_OUT | X2 |
+| 21 | RF1 | RF | Matching network → FLT1 → U.FL |
+| 33, 31 | VLXSMPS / VFBSMPS | SMPSLX / SMPSFB | L1, L2 |
+
+**Unused:** PB6, PB7, PB8, PB9, PE4, AT0, AT1. These are available for future additions (RGB LEDs, OLED, etc.).
 
 ---
 
-## Key Switches (SW1–SW6)
+## Key Switches (SW3–SW8)
 
 ```
-+3V3 ──[10kΩ]── P0.0x ──[switch]── GND
+KEYn (GPIO) ──[switch]── GND
 ```
-- ZMK configures internal pull-ups — R3–R8 can be omitted if using `gpio-pull-up` in devicetree
-- Grid: 19.05×19.05mm spacing, 3-pin solderable Gateron footprint
+There are no external pull-ups. Enable internal pull-ups in firmware (`GPIO_PULL_UP` in devicetree). The switches are on the 19.05mm MX grid. The reference designators don't follow the KEY numbering (e.g. KEY2 = SW5), so map by net name, not by ref.
 
 ---
 
 ## Rotary Encoders (ENC1–ENC3)
 
-Each PEC11R has 5 pins: A, B, GND (encoder) + C, D (switch):
 ```
-+3V3 ──[10kΩ]── P0.xx_A
-+3V3 ──[10kΩ]── P0.xx_B
-+3V3 ──[10kΩ]── P0.xx_SW
-ENCn GND pins ── GND
+ENCn_A  (GPIO) ── A
+ENCn_B  (GPIO) ── B
+GND            ── C (common)
+ENCn_SW (GPIO) ── S1
+GND            ── S2
 ```
-- Pull-ups can be replaced by ZMK `gpio-pull-up` in devicetree
-- Add 100nF filter caps on A and B lines for debounce
+There are no external pull-ups or filter caps. Use internal pull-ups, and debounce in firmware.
 
 ---
 
-## Slider (SL1 — Alps RS60N111100B)
+## Slider (R12 — Bourns PTA6043)
 
 ```
-+3V3 ──── SL1 pin 1 (top of track)
-GND  ──── SL1 pin 3 (bottom of track)
-P0.28 ─── SL1 pin 2 (wiper → SAADC AIN4)
++3.3V ── pin 1
+PA1   ── pin 2 (wiper)
+GND   ── pin 3
 ```
-- Add 100nF cap from wiper to GND for noise filtering
-- ZMK reads slider via SAADC (Successive Approximation ADC) — configure in devicetree
+The wiper goes directly to the ADC input, with no filter cap. Smooth the reading in firmware if it's noisy.
 
 ---
 
-## Power Path — USB-C + Charging
+## USB-C
 
 ```
-J1 VBUS ──[F1]──┬──[D1]── LDO input
-                │
-               [U3] MCP73831
-                │
-               [J2] LiPo ──[D2]── LDO input
-
-J1 D+   ── USB_DP (nRF52840)
-J1 D-   ── USB_DM (nRF52840)
-J1 CC1  ──[5.1kΩ R1]── GND
-J1 CC2  ──[5.1kΩ R2]── GND
-J1 GND/shield ── GND
-```
-
-**MCP73831 connections:**
-```
-VDD  ← USB 5V (after polyfuse)
-VSS  → GND
-VBAT → LiPo+ (via J2)
-PROG ──[2kΩ R21]── GND   (sets 500mA charge current: I = 1000/R kΩ)
-STAT ──[1kΩ R18]── LED1 ── GND  (LOW = charging, Hi-Z = done/fault)
+VBUS ── +5V
+D+/D- ── U2 USBLC6 ── PA12 / PA11
+CC1 ──[5.1kΩ R2]── GND
+CC2 ──[5.1kΩ R1]── GND
+SBU1/SBU2 ── not connected
+Shield ── GND
 ```
 
 ---
 
-## DFU Button (SW7)
+## Programming and Debug
 
-```
-P0.20 ──[SW7]── GND
-```
-ZMK enters USB DFU bootloader when SW7 is held during power-on or via ZMK's `&bootloader` keymap action. No resistor needed — use internal pull-up in devicetree.
+**SWD1 (Tag-Connect TC2030 footprint)** — 6 pads, no connector fitted. A TC2030-IDC cable is needed to connect an ST-Link / J-Link.
 
----
+| Pad | Signal |
+|---|---|
+| 1 | +3.3V |
+| 2 | SWD_DIO (PA13) |
+| 3 | SWD_NRST |
+| 4 | SWD_CLK (PA14) |
+| 5 | GND |
+| 6 | SWD_TRC (PB3, SWO) |
 
-## RESET Button (SW8)
+**BOOT0 button:** pulls BOOT0 high (through R11 220Ω). R10 5.1kΩ holds it low otherwise. To enter the ST system bootloader (USB DFU), hold BOOT0 and press NRST.
 
-```
-RESET_N (P0.18) ──[SW8]── GND
-```
-nRF52840 has an internal pull-up on RESET_N. Momentary press resets the chip.
-
----
-
-## SWD Debug Header (J3)
-
-4-pin 2.54mm header:
-```
-Pin 1: SWDCLK
-Pin 2: SWDIO
-Pin 3: GND
-Pin 4: +3V3
-```
-Use a J-Link, Black Magic Probe, or another nRF52840 running the Blackmagic firmware.
+**NRST1 button:** resets the MCU. C18 100nF filters the line.
 
 ---
 
-## Antenna Keep-Out Zone
+## RF
 
-**Not applicable — antenna is internal to the E73-2G4M08S1C module.**
-
-The module itself requires a keep-out zone around the antenna end (the end opposite the castellated pads). Refer to the E73-2G4M08S1C datasheet mechanical drawing — typically no copper pours under or beside the module's antenna section. Position the module at a board edge for best RF performance.
-
----
-
-## Schematic Sheet Organisation (suggested)
-
-1. **Power** — USB-C, polyfuse, diode OR, MCP73831 charging, LDO, battery connector, charge LED
-2. **nRF52840 core** — MCU symbol, crystals, DCDC inductor, decoupling, SWD header, antenna, DFU/RESET buttons
-3. **Input grid** — 6 switches
-4. **Encoders** — 3× PEC11R
-5. **Slider** — Alps + ADC connection
+```
+RF1 (pin 21) ── C20 0.8pF shunt ── L3 2.7nH ── C21 0.3pF shunt ── FLT1 low-pass ── U.FL (RF1) ── external antenna
+```
+There is no on-board antenna. An external 2.4GHz antenna with a U.FL lead is needed and is **not on the BOM**. The matching values follow ST's reference design (AN5165).
 
 ---
 
@@ -231,7 +179,7 @@ The module itself requires a keep-out zone around the antenna end (the end oppos
 
 | Type | Format | Example |
 |---|---|---|
-| Power | Uppercase | `+3V3`, `+5V`, `VBAT`, `GND` |
-| GPIO | `P{port}.{pin}` | `P0.08`, `P0.28` |
-| Named signal | `BLOCK_SIGNAL` | `ENC1_A`, `CHG_STAT` |
-| USB | `USB_DP`, `USB_DM` | — |
+| Power | As KiCad power symbols | `+3.3V`, `+5V`, `GND` |
+| Named signal | `BLOCK_SIGNAL` | `ENC1_A`, `SWD_CLK`, `BATT_SENSE` |
+| Keys | `KEYn` | `KEY1` |
+| USB | `USB_D+`, `USB_D-` | — |
